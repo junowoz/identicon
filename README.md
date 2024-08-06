@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎨 Gerador de Identicons
 
-## Getting Started
+A motivação para este projeto surgiu enquanto eu buscava uma foto de perfil padronizada para meu GitHub e WakaTime. Identicons fornecem uma identidade visual única e consistente sem a necessidade de uma imagem real.
 
-First, run the development server:
+## O que é um Identicon?
 
+![Fingerprint](./public/fingerprint_thumb1.png)
+
+Um identicon é uma imagem que representa visualmente uma identidade única. Eles são gerados a partir de dados específicos, como um texto ou um endereço IP, utilizando uma função de hash. Este conceito foi originalmente inventado por Don Park como uma maneira de representar visualmente endereços IP sem revelar o endereço real, proporcionando uma camada adicional de privacidade. 
+
+Identicons podem ser usados em diversas situações para identificar visualmente usuários ou itens de forma única e fácil de reconhecer, sem expor informações sensíveis. Por exemplo, eles podem ser usados em páginas wiki para identificar autores ou em sistemas CRM para identificar clientes.
+
+Aqui está um exemplo de um identicon gerado a partir da palavra "identicon":
+
+![Identicon](./public/identicon_example.png)
+
+## Tecnologias Utilizadas
+
+- **Next.js**: Framework React para renderização do lado do servidor e geração de sites estáticos.
+- **Tailwind CSS**: Framework CSS utilitário para estilização rápida e responsiva.
+- **ethereum-blockies**: Biblioteca para geração de identicons visualmente consistentes.
+
+## Como Funciona
+
+1. Digite um texto no campo de entrada.
+2. O identicon será gerado automaticamente e exibido na tela.
+3. Clique no botão "Baixar Imagem" para salvar a imagem em alta resolução.
+
+## Como Executar o Projeto
+
+1. Navegue até o diretório do projeto:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd identicons
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Instale as dependências:
+```bash
+pnpm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Execute o projeto:
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+4. Abra o navegador e acesse [http://localhost:3000](http://localhost:3000) para ver o projeto funcionando.
