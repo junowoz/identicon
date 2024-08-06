@@ -12,7 +12,7 @@ Identicons podem ser usados em diversas situações para identificar visualmente
 
 Aqui está um exemplo de um identicon gerado a partir da palavra "identicon":
 
-![Identicon](./public/identicon_example.png)
+![Identicon](./public/identicon.png)
 
 ## Tecnologias Utilizadas
 
@@ -28,19 +28,23 @@ Aqui está um exemplo de um identicon gerado a partir da palavra "identicon":
 
 ## Como Executar o Projeto
 
-1. Navegue até o diretório do projeto:
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/junowoz/identicons.git
+
+2. Navegue até o diretório do projeto:
 ```bash
-cd identicons
+cd identicon
 ```
 
-2. Instale as dependências:
+3. Instale as dependências:
 ```bash
 pnpm install
 ```
 
-3. Execute o projeto:
+4. Execute o projeto:
 ```bash
 pnpm dev
 ```
 
-4. Abra o navegador e acesse [http://localhost:3000](http://localhost:3000) para ver o projeto funcionando.
+5. Abra o navegador e acesse [http://localhost:3000](http://localhost:3000) para ver o projeto funcionando.
