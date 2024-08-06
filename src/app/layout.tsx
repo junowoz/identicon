@@ -6,11 +6,11 @@ import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "🎨 Gerador de Identicons",
+  title: "Gerador de Identicons",
   description:
     "Crie imagens de perfil únicas e personalizadas a partir de texto.",
   openGraph: {
-    title: "🎨 Gerador de Identicons",
+    title: "Gerador de Identicons",
     description:
       "Crie imagens de perfil únicas e personalizadas a partir de texto.",
     images: [
