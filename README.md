@@ -12,7 +12,7 @@ Identicons podem ser usados em diversas situações para identificar visualmente
 
 Aqui está um exemplo de um identicon gerado a partir da palavra "identicon":
 
-![Identicon](./public/identicon.png)
+<img src="./public/identicon.png" alt="Identicon" width="256" />
 
 ## Tecnologias Utilizadas
 
@@ -29,8 +29,9 @@ Aqui está um exemplo de um identicon gerado a partir da palavra "identicon":
 ## Como Executar o Projeto
 
 1. Clone o repositório:
-   ```bash
-   git clone https://github.com/junowoz/identicons.git
+```bash
+git clone https://github.com/junowoz/identicon.git
+```
 
 2. Navegue até o diretório do projeto:
 ```bash
