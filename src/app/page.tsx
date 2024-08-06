@@ -3,6 +3,14 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import blockies from "ethereum-blockies";
 
+const normalizeInput = (input: string): string => {
+  return input
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "-");
+};
+
 export default function IdenticonGenerator() {
   const [input, setInput] = useState<string>("");
   const [dataUrl, setDataUrl] = useState<string>("");
@@ -17,8 +25,9 @@ export default function IdenticonGenerator() {
   }, [input]);
 
   const generateIdenticon = (input: string) => {
+    const normalizedInput = normalizeInput(input);
     const icon = blockies.create({
-      seed: input.toLowerCase(),
+      seed: normalizedInput,
       size: 8,
       scale: 64,
     });
@@ -27,9 +36,10 @@ export default function IdenticonGenerator() {
 
   const downloadImage = () => {
     if (!dataUrl) return;
+    const normalizedInput = normalizeInput(input);
     const link = document.createElement("a");
     link.href = dataUrl;
-    link.download = `${input}.png`;
+    link.download = `${normalizedInput}.png`;
     link.click();
   };
 
