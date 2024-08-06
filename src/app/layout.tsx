@@ -18,6 +18,11 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    creator: "@junow0z",
+    images: "https://identicon.junowoz.com/og.png",
+  },
 };
 
 export default function RootLayout({
