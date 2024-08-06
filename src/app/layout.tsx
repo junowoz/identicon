@@ -8,6 +8,16 @@ export const metadata: Metadata = {
   title: "🎨 Gerador de Identicons",
   description:
     "Crie imagens de perfil únicas e personalizadas a partir de texto.",
+  openGraph: {
+    title: "🎨 Gerador de Identicons",
+    description:
+      "Crie imagens de perfil únicas e personalizadas a partir de texto.",
+    images: [
+      {
+        url: "https://identicon.junowoz.com/og.png",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

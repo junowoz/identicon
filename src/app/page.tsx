@@ -88,6 +88,7 @@ export default function IdenticonGenerator() {
         <p className="mt-2 text-xs text-gray-500">
           Criado por{" "}
           <a
+            target="_blank"
             href="https://junowoz.com"
             className="text-blue-500 hover:underline"
           >
