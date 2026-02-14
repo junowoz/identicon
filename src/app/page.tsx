@@ -6,7 +6,7 @@ import blockies from "ethereum-blockies";
 const GRID_SIZE = 8;
 const MAX_INPUT_LENGTH = 100;
 const PREVIEW_SIZE = 256;
-const DOWNLOAD_SIZE = 1024;
+const DOWNLOAD_SIZE_OPTIONS = [4096, 3072, 2048, 1024] as const;
 
 const hashText = (text: string): number => {
   let hash = 2166136261;
@@ -50,6 +50,19 @@ const createIdenticonDataUrl = (seed: string, imageSize: number): string => {
   return icon.toDataURL();
 };
 
+const createBestDownloadDataUrl = (seed: string): string => {
+  for (const size of DOWNLOAD_SIZE_OPTIONS) {
+    try {
+      return createIdenticonDataUrl(seed, size);
+    } catch {
+      continue;
+    }
+  }
+
+  const fallbackSize = 512;
+  return createIdenticonDataUrl(seed, fallbackSize);
+};
+
 export default function IdenticonGenerator() {
   const [input, setInput] = useState<string>("");
   const [dataUrl, setDataUrl] = useState<string>("");
@@ -65,8 +78,10 @@ export default function IdenticonGenerator() {
   const downloadImage = () => {
     if (!dataUrl) return;
 
+    const bestDownloadDataUrl = createBestDownloadDataUrl(input);
+
     const link = document.createElement("a");
-    link.href = createIdenticonDataUrl(input, DOWNLOAD_SIZE);
+    link.href = bestDownloadDataUrl;
     link.download = `${sanitizeFilename(input)}.png`;
     link.click();
   };
@@ -122,8 +137,7 @@ export default function IdenticonGenerator() {
           </div>
         )}
         <p className="mt-4 text-sm text-gray-600">
-          Pré-visualização: {PREVIEW_SIZE}x{PREVIEW_SIZE}px · Download:{" "}
-          {DOWNLOAD_SIZE}x{DOWNLOAD_SIZE}px
+          Download: {DOWNLOAD_SIZE_OPTIONS[0]}x{DOWNLOAD_SIZE_OPTIONS[0]}px
         </p>
         <p className="mt-2 text-xs text-gray-500">
           Entrada máxima: 100 caracteres.
