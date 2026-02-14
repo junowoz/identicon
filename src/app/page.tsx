@@ -3,43 +3,71 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import blockies from "ethereum-blockies";
 
-const normalizeInput = (input: string): string => {
-  return input
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/\s+/g, "-");
+const GRID_SIZE = 8;
+const MAX_INPUT_LENGTH = 100;
+const PREVIEW_SIZE = 256;
+const DOWNLOAD_SIZE = 1024;
+
+const hashText = (text: string): number => {
+  let hash = 2166136261;
+  for (let index = 0; index < text.length; index += 1) {
+    hash ^= text.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+};
+
+const colorFromSeed = (seed: string, offset: number): string => {
+  const hash = hashText(`${seed}:${offset}`);
+  const hue = hash % 360;
+  const saturation = 45 + ((hash >>> 8) % 40);
+  const lightness = 35 + ((hash >>> 16) % 35);
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+};
+
+const sanitizeFilename = (input: string): string => {
+  const trimmed = input.trim();
+  if (!trimmed) return "identicon";
+
+  const safe = trimmed
+    .replace(/[<>:"/\\|?*\x00-\x1F]/g, "_")
+    .replace(/\s+/g, " ")
+    .slice(0, MAX_INPUT_LENGTH);
+
+  return safe || "identicon";
+};
+
+const createIdenticonDataUrl = (seed: string, imageSize: number): string => {
+  const scale = Math.max(1, Math.floor(imageSize / GRID_SIZE));
+  const icon = blockies.create({
+    seed,
+    size: GRID_SIZE,
+    scale,
+    color: colorFromSeed(seed, 1),
+    bgcolor: colorFromSeed(seed, 2),
+    spotcolor: colorFromSeed(seed, 3),
+  } as unknown as Parameters<typeof blockies.create>[0]);
+  return icon.toDataURL();
 };
 
 export default function IdenticonGenerator() {
   const [input, setInput] = useState<string>("");
   const [dataUrl, setDataUrl] = useState<string>("");
-  const [imageSize] = useState<number>(256);
 
   useEffect(() => {
-    if (input) {
-      generateIdenticon(input);
-    } else {
+    if (input.length === 0) {
       setDataUrl("");
+      return;
     }
+    setDataUrl(createIdenticonDataUrl(input, PREVIEW_SIZE));
   }, [input]);
-
-  const generateIdenticon = (input: string) => {
-    const normalizedInput = normalizeInput(input);
-    const icon = blockies.create({
-      seed: normalizedInput,
-      size: 8,
-      scale: 64,
-    });
-    setDataUrl(icon.toDataURL());
-  };
 
   const downloadImage = () => {
     if (!dataUrl) return;
-    const normalizedInput = normalizeInput(input);
+
     const link = document.createElement("a");
-    link.href = dataUrl;
-    link.download = `${normalizedInput}.png`;
+    link.href = createIdenticonDataUrl(input, DOWNLOAD_SIZE);
+    link.download = `${sanitizeFilename(input)}.png`;
     link.click();
   };
 
@@ -55,7 +83,8 @@ export default function IdenticonGenerator() {
           type="text"
           value={input}
           onChange={(e) => {
-            if (e.target.value.length <= 500) setInput(e.target.value);
+            if (e.target.value.length <= MAX_INPUT_LENGTH)
+              setInput(e.target.value);
           }}
           placeholder="Digite aqui para começar"
           className="w-full p-2 border border-gray-300 rounded-lg mb-4 text-black"
@@ -64,8 +93,8 @@ export default function IdenticonGenerator() {
           <div className="mt-4 flex flex-col items-center">
             <Image
               src={dataUrl}
-              width={imageSize}
-              height={imageSize}
+              width={PREVIEW_SIZE}
+              height={PREVIEW_SIZE}
               alt="Identicon"
               className="rounded-lg"
             />
@@ -80,8 +109,8 @@ export default function IdenticonGenerator() {
           <div className="mt-4 flex flex-col items-center">
             <Image
               src="/placeholder.png"
-              width={imageSize}
-              height={imageSize}
+              width={PREVIEW_SIZE}
+              height={PREVIEW_SIZE}
               alt="Placeholder"
             />
             <button
@@ -93,12 +122,17 @@ export default function IdenticonGenerator() {
           </div>
         )}
         <p className="mt-4 text-sm text-gray-600">
-          Tamanho da imagem: {imageSize}x{imageSize}px
+          Pré-visualização: {PREVIEW_SIZE}x{PREVIEW_SIZE}px · Download:{" "}
+          {DOWNLOAD_SIZE}x{DOWNLOAD_SIZE}px
+        </p>
+        <p className="mt-2 text-xs text-gray-500">
+          Entrada máxima: 100 caracteres.
         </p>
         <p className="mt-2 text-xs text-gray-500">
           Criado por{" "}
           <a
             target="_blank"
+            rel="noopener noreferrer"
             href="https://junowoz.com"
             className="text-blue-500 hover:underline"
           >
