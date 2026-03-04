@@ -17,12 +17,12 @@
   },
   "devDependencies": {
     "@types/ethereum-blockies": "^0.1.2",
-    "@types/node": "^25.3.0",
+    "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "eslint": "^10.0.2",
     "eslint-config-next": "16.1.6",
-    "postcss": "^8.5.6",
+    "postcss": "^8.5.8",
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3"
   },
